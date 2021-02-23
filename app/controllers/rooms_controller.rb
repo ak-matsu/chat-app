@@ -13,6 +13,14 @@ class RoomsController < ApplicationController
     end
   end
 
+  #どのルームを削除するのか特定したい場合、Room.find(params[:id])を使用
+  def destroy
+    room = Room.find(params[:id])
+    room.destroy
+    #destroyメソッドが実行されたらrootにリダイレクトする
+    redirect_to root_path
+  end
+
   private
   def room_params
     params.require(:room).permit(:name, user_ids: [])

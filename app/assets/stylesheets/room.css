@@ -122,3 +122,8 @@ select {
   height: 80px;
   width: 100%;
 }
+
+/*バリデーションエラー時にビューが崩れないように設定*/
+.field_with_errors {
+  display: contents;
+}
