@@ -2,6 +2,9 @@ class MessagesController < ApplicationController
   def index
     @message = Message.new
     @room = Room.find(params[:room_id])
+    @messages = @room.messages.includes(:user)
+    #チャットルームに紐付いている
+    #全てのメッセージ（@room.messages）を@messagesと定義
   end
 
   #messagesコントローラーにcreateアクションを定義する
@@ -17,6 +20,7 @@ class MessagesController < ApplicationController
       #redirect_toメソッドを用いてmessagesコントローラーのindexアクションに再度リクエストを送信し、新たにインスタンス変数を生成
       redirect_to  room_messages_path(@room)
     else
+      @messages = @room.messages.includes(:user)
       #renderメソッドを用いてindexアクションのindex.html.erbを表示するように指定
       #indexアクションのインスタンス変数はそのままindex.html.erbに渡され、同じページに戻る
       render :index
