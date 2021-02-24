@@ -14,5 +14,10 @@
       <!-- 投稿したメッセージ内容を記述する -->
       <%= message.content %>
     </div>
+    <!--image_tagメソッドを記述して画像を表示させる-->
+    <!--if message.image.attached?と記述することで、画像が存在する場合のみimage_tagが読み込まれるようになる-->
+    <!--variant(resize: w x h)とすることで指定した画像サイズで投稿できる-->
+    <!--xを入力してください。-->
+    <%= image_tag message.image.variant(resize: '500x500'),class: 'message-image' if message.image.attached? %>
   </div>
 </div>
