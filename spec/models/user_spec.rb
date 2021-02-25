@@ -53,6 +53,20 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
 
-
+    it '重複したemailが存在する場合登録できないこと' do
+      #生成した@userをテーブルへ保存後、
+      @user.save
+      #別のユーザーanother_userを生成する。
+      #FactoryBotを用いて、user情報(email)だけを選択してインスタンスを生成
+      #生成したインスタンスをanother_userへ代入します。
+      another_user = FactoryBot.build(:user,email: @user.email)
+      #another_user.email へ すでに保存済みの@userのemail情報を上書きする。
+      another_user.email = @user.email
+      #.valid?でanother_userがDBへ保存できるか判別
+      another_user.valid?
+      #faluseとなるため。
+      #another_user.errorsでエラーを出して、another_user.errors.full_mseeagesでエラー全文を表示。
+      expect(another_user.errors.full_messages).to include("Email has already been taken")
+    end
   end
 end
